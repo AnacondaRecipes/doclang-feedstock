@@ -11,8 +11,6 @@ source:
 
 build:
   number: 0
-  # osx-64 is outside the supported Anaconda build scope.
-  skip: true  # [py<310 or (osx and x86_64)]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
     - doclang = doclang.cli:app
@@ -27,7 +25,6 @@ requirements:
     - lxml >=4.8.0
     - typer >=0.15.1
   run_constrained:
-    # Optional schematron-saxon backend; development groups are not runtime extras.
     - saxonche >=12.9.0
 
 test:
