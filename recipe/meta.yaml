@@ -1,0 +1,54 @@
+{% set name = "doclang" %}
+{% set version = "0.8.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 29607b86670c769071c785ade7b1f48d20f188b8eff9b68ffdb0446de1d979dc
+
+build:
+  number: 0
+  skip: true  # [py<310]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  entry_points:
+    - doclang = doclang.cli:app
+
+requirements:
+  host:
+    - python
+    - setuptools >=80
+    - pip
+  run:
+    - python
+    - lxml >=4.8.0
+    - typer >=0.15.1
+  run_constrained:
+    - saxonche >=12.9.0
+
+test:
+  imports:
+    - doclang
+    - doclang.validation
+  requires:
+    - pip
+  commands:
+    - pip check
+    - doclang --help
+
+about:
+  home: https://doclang.ai
+  summary: DocLang reference toolkit
+  description: The reference toolkit for validating and packaging DocLang documents.
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  doc_url: https://github.com/doclang-project/doclang/blob/main/README.md
+  dev_url: https://github.com/doclang-project/doclang
+
+extra:
+  recipe-maintainers:
+    - kklein
+    - jsmolic
